@@ -1,4 +1,5 @@
-# PyTorch Implementation of [Multi-label Clinical Text Classification: Using Code Inner Relations to Guide Few-shot Learning]
+# Rare Codes Count: Mining Inter-code Relations for Long-tail Clinical Text Classification
+
 
 ## Requirement
 
@@ -7,9 +8,9 @@ conda env create -f environment.yaml
 ```
 
 
-## Files Directory
+## Data
 
-Arrange the files in MIMIC-III from https://physionet.org/content/mimiciii/1.4/, as below:
+Arrange the data files in [MIMIC-III](https://physionet.org/content/mimiciii/1.4/), and train-dev-test split files from [caml-mimic](https://github.com/jamesmullenbach/caml-mimic), as below:
 
     ICD_pred/
     |
@@ -31,7 +32,7 @@ Arrange the files in MIMIC-III from https://physionet.org/content/mimiciii/1.4/,
          |
          |--ICD9_descriptions (Already given)
          |
-         |--caml/                            * train-dev-test split (already given) from [caml-mimic](https://github.com/jamesmullenbach/caml-mimic)
+         |--caml/                            * Train-dev-test split from caml-mimic.
          |    |
          |    |--train_50_hadm_ids.csv
          |    |
@@ -45,9 +46,23 @@ Arrange the files in MIMIC-III from https://physionet.org/content/mimiciii/1.4/,
          |    |
          |    |--test_full_hadm_ids.csv
          |
-         |--generated_data/                       * The preprocessing codes will generate some files here.
+         |--generated_data/                   * The preprocessing codes will generate some files here.
 
 
+
+## Adjacency Matrix 
+
+1. Download the [adj files](https://drive.google.com/file/d/1LAluKX2kq-UvGrz_-tXbE_3WjhCOxVzG/view?usp=drive_link).
+
+2. Put the adj.zip under /mimicdata.
+
+3. unzip the file.
+
+```
+unzip adj.zip
+
+rm -rf adj.zip
+```
 
 ## Reproduction
 
@@ -68,7 +83,12 @@ cd codes
 Example:
 
 ```
-CUDA_VISIBLE_DEVICES=1 python main.py --folder_path '../mimicdata/generated_data/' --make_sentence True --hidden_size 512 --name run_demo --data_setting 50 --rnn_layer 1 --max_len 4000 --learning_rate 0.001 --adj 'path-to-adj'
+CUDA_VISIBLE_DEVICES=1 python main.py \
+--folder_path '../mimicdata/generated_data/' \
+--make_sentence True \
+--hidden_size 512 --name run_demo --data_setting 50 \
+--rnn_layer 1 --max_len 4000 --learning_rate 0.001 \
+--adj 'path-to-adj'
 ```
 
 ## Time Cost
