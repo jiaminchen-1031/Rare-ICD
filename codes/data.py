@@ -157,10 +157,10 @@ def load_datasets(data_setting, batch_size, word2sem, nfold):
     hadm_ids = train_raw['hadm_ids'].copy()
     targets = train_raw['targets'].copy()
 
-    for _ in range(nfold):
-        train_raw['texts'].extend(replace_word_with_semtypes(texts, word2sem))
-        train_raw['hadm_ids'].extend(hadm_ids)
-        train_raw['targets'].extend(targets)
+    # for _ in range(nfold):
+    #     train_raw['texts'].extend(replace_word_with_semtypes(texts, word2sem))
+    #     train_raw['hadm_ids'].extend(hadm_ids)
+    #     train_raw['targets'].extend(targets)
 
     if train_raw['labels'] != dev_raw['labels'] or dev_raw['labels'] != test_raw['labels']:
         raise ValueError(f"Train dev test labels don't match!")
@@ -271,7 +271,8 @@ def load_label_embedding(labels, pad_index, embed_size):
 
 
 def index_text(data, indexer, max_len, bpe, split):
-    tokenizer = spm.SentencePieceProcessor(model_file='bpe3.model')
+    if bpe:
+        tokenizer = spm.SentencePieceProcessor(model_file='bpe3.model')
     data_indexed = []
     lens = []
     # count = 0
@@ -331,12 +332,13 @@ class ICD_Dataset(Dataset):
         return {'hadm_id': hadm_id, 'text': text, 'length': length, 'codes': codes}
 
 
-def prepare_datasets(data_setting, batch_size, max_len, bpe, nfold):
+def prepare_datasets(data_setting, batch_size, max_len, bpe=None, nfold=None):
 
-    word2sem = dict()
-    df_text = pd.read_csv('./processed_discharge.csv', sep=';')
-    for i in range(len(df_text)):
-        word2sem[df_text['Words'][i]] = df_text['Semtypes'][i].split(',')
+    # word2sem = dict()
+    # df_text = pd.read_csv('./processed_discharge.csv', sep=';')
+    # for i in range(len(df_text)):
+    #     word2sem[df_text['Words'][i]] = df_text['Semtypes'][i].split(',')
+    word2sem = None
 
     train_data, dev_data, test_data = load_datasets(data_setting, batch_size, word2sem, nfold)
 

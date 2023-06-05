@@ -295,7 +295,7 @@ if __name__ == '__main__':
     split_data()
     split_data(is_full=False)
     build_vocab()
-    embed_filename = embed_words(embed_size=100)
+    embed_filename = embed_words(embed_size=128)
     word_to_idx = map_vocab_to_embed()
     vectorize_code_desc(word_to_idx)
 
