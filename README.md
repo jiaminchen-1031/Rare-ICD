@@ -12,7 +12,7 @@ conda env create -f environment.yaml
 
 Arrange the data files in [MIMIC-III](https://physionet.org/content/mimiciii/1.4/), and train-dev-test split files from [caml-mimic](https://github.com/jamesmullenbach/caml-mimic), as below:
 
-    ICD_pred/
+    Rare-ICD/
     |
     |--codes/
     |
@@ -69,16 +69,12 @@ rm -rf adj.zip
 1. Preprocess MIMIC-III data.
 
 ```
-cd ICD_pred
+cd codes
 
 python preprocess.py
 ```
 
 2. Run the code.
-
-```
-cd codes
-```
 
 Example:
 
